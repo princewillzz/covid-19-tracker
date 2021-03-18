@@ -2,17 +2,35 @@ import axios from "axios";
 
 const url = "https://covid19.mathdro.id/api";
 
+const fakeDataStore = new Map();
+
 export const fetchData = async (country) => {
 	let changeableUrl = url;
 	if (country) {
 		changeableUrl = `${url}/countries/${country}`;
 	}
+
+	// Trying to get the data from the fake local datastore
+	try {
+		// console.log(fakeDataStore.get(country));
+		if (fakeDataStore.get(country)) {
+			return fakeDataStore.get(country);
+		}
+	} catch (error) {}
+
 	try {
 		//const response = await axios.get(url); Whole response
 		//const { data } = await axios.get(url);
 		const {
 			data: { confirmed, recovered, deaths, lastUpdate },
 		} = await axios.get(changeableUrl);
+		// console.log("API call");
+		fakeDataStore.set(country, {
+			confirmed,
+			recovered,
+			deaths,
+			lastUpdate,
+		});
 
 		/*const modifiedData = {
       confirmed: confirmed, //data.confirmed,

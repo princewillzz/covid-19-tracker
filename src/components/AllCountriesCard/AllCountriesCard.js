@@ -45,30 +45,63 @@ const AllCountriesCard = () => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		const setCountriesList = async () => {
-			const countries = await fetchCountries();
-			setFinalCountries(countries);
-			setCountries(countries);
-		};
-		setCountriesList();
+		setTimeout(() => {
+			const setCountriesList = async () => {
+				const countries = await fetchCountries();
+				setFinalCountries(countries);
+				setCountries(countries);
+			};
+			setCountriesList();
+		}, 0);
 	}, []);
 
-	const handleSearch = (e) => {
-		e.preventDefault();
-		if (!searchValue) {
-			return;
+	// Render sub-components
+	const renderComponents = () => {
+		if (!countries || countries.length <= 0) {
+			return (
+				<Alert
+					style={{ width: "70vw", margin: "auto" }}
+					severity="error"
+					action={
+						<Button
+							onClick={handleReset}
+							color="inherit"
+							size="small"
+						>
+							UNDO
+						</Button>
+					}
+				>
+					{" "}
+					No Results found ...!
+				</Alert>
+			);
 		}
-		console.log(searchValue);
-		const searchResult = finalCountries.filter((country) =>
-			country.toLowerCase().includes(searchValue.toLocaleLowerCase())
-		);
-		console.log(searchResult);
-		setCountries(searchResult);
+
+		return countries.map((country) => {
+			return <CountryCard key={country} country={country} />;
+		});
 	};
 
 	const handleReset = () => {
 		setSearchValue("");
 		setCountries(finalCountries);
+	};
+
+	const handleSearch = (value) => {
+		setSearchValue(value);
+		console.log(value);
+
+		if (!value) {
+			setCountries(finalCountries);
+			return;
+		}
+
+		const searchResult = finalCountries.filter((country) =>
+			country.toLowerCase().includes(value.toLocaleLowerCase())
+		);
+		// console.log(searchResult);
+		setCountries(searchResult);
 	};
 
 	return (
@@ -78,13 +111,13 @@ const AllCountriesCard = () => {
 					<RestoreOutlined />
 				</IconButton>
 				<Paper
-					onSubmit={handleSearch}
-					component="form"
+					// onSubmit={handleSearch}
+					// component="form"
 					className={classes.root}
 				>
 					<InputBase
 						value={searchValue}
-						onChange={(e) => setSearchValue(e.target.value)}
+						onChange={(e) => handleSearch(e.target.value)}
 						className={classes.input}
 						placeholder="Search Country"
 						inputProps={{ "aria-label": "search country" }}
@@ -102,30 +135,7 @@ const AllCountriesCard = () => {
 					/>
 				</Paper>
 			</div>
-			<div className="allCountiesContainer">
-				{countries && countries.length > 0 ? (
-					countries.map((country) => {
-						return <CountryCard key={country} country={country} />;
-					})
-				) : (
-					<Alert
-						style={{ width: "70vw", margin: "auto" }}
-						severity="error"
-						action={
-							<Button
-								onClick={handleReset}
-								color="inherit"
-								size="small"
-							>
-								UNDO
-							</Button>
-						}
-					>
-						{" "}
-						No Results found ...!
-					</Alert>
-				)}
-			</div>
+			<div className="allCountiesContainer">{renderComponents()}</div>
 		</>
 	);
 };

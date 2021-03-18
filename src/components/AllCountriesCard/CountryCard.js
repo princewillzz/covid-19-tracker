@@ -7,6 +7,7 @@ const CountryCard = ({ country }) => {
 	const [confirmed, setConfirmed] = useState(0);
 	const [recovered, setRecovered] = useState(0);
 	const [deaths, setDeaths] = useState(0);
+	const [lastUpdate, setLastUpdate] = useState();
 
 	const [state, setState] = useState({
 		raised: false,
@@ -15,23 +16,23 @@ const CountryCard = ({ country }) => {
 
 	useEffect(() => {
 		console.log("Data");
-		const getCountriesData = async () => {
-			try {
-				const data = await fetchData(country);
+		setTimeout(() => {
+			const getCountriesData = async () => {
+				try {
+					const data = await fetchData(country);
 
-				if (data) {
-					// const c = data.confirmed.value;
-					// console.log(data.confirmed.value);
-					setConfirmed(data.confirmed.value);
-					setRecovered(data.recovered.value);
-					setDeaths(data.deaths.value);
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		};
+					if (data) {
+						console.log(data);
+						setConfirmed(data.confirmed.value);
+						setRecovered(data.recovered.value);
+						setDeaths(data.deaths.value);
+						setLastUpdate(data.lastUpdate);
+					}
+				} catch (error) {}
+			};
 
-		getCountriesData();
+			getCountriesData();
+		}, 0);
 
 		return () => {
 			setConfirmed(null);
@@ -82,7 +83,9 @@ const CountryCard = ({ country }) => {
 									legend: { display: true },
 									title: {
 										display: true,
-										text: `Current state in country name`,
+										text: `Last Updated on ${new Date(
+											lastUpdate
+										).toUTCString()}`,
 									},
 									maintainAspectRatio: true,
 									responsive: true,

@@ -9,11 +9,13 @@ const CountryPicker = ({ handleCountryChange }) => {
 	const [fetchedCountries, setFetchedCountries] = useState([]);
 
 	useEffect(() => {
-		const fetchAPI = async () => {
-			setFetchedCountries(await fetchCountries());
-		};
+		setTimeout(() => {
+			const fetchAPI = async () => {
+				setFetchedCountries(await fetchCountries());
+			};
 
-		fetchAPI();
+			fetchAPI();
+		}, 0);
 	}, [setFetchedCountries]);
 
 	const optionsOfCountries = (countries) => {
