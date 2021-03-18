@@ -15,14 +15,13 @@ const CountryCard = ({ country }) => {
 	});
 
 	useEffect(() => {
-		console.log("Data");
 		setTimeout(() => {
 			const getCountriesData = async () => {
 				try {
 					const data = await fetchData(country);
 
 					if (data) {
-						console.log(data);
+						// console.log(data);
 						setConfirmed(data.confirmed.value);
 						setRecovered(data.recovered.value);
 						setDeaths(data.deaths.value);

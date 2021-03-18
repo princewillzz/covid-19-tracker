@@ -90,7 +90,7 @@ const AllCountriesCard = () => {
 
 	const handleSearch = (value) => {
 		setSearchValue(value);
-		console.log(value);
+		// console.log(value);
 
 		if (!value) {
 			setCountries(finalCountries);
