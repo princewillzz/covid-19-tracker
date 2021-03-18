@@ -1,20 +1,19 @@
 .search-container {
 	display: grid;
-	grid-template-columns: auto;
+	grid-template-columns: 50px auto;
 	text-align: center;
 	justify-content: center;
 	margin-top: 3rem;
 }
 
 .allCountiesContainer {
-	margin-top: 2rem;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 	gap: 2px;
 	justify-content: center;
 	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
+	margin-top: 2rem;
 }
 .country_card {
 	padding: 5px;

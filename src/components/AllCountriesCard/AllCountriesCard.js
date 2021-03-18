@@ -4,15 +4,16 @@ import CountryCard from "./CountryCard";
 
 import "./AllCountriesCard.css";
 
-import { fetchCountries, fetchData } from "../../api/index";
-import { Paper } from "@material-ui/core";
+import { fetchCountries } from "../../api/index";
+import { Button, Paper } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import { SearchOutlined } from "@material-ui/icons";
+import { RestoreOutlined, SearchOutlined } from "@material-ui/icons";
+import { Alert } from "@material-ui/lab";
 
 // import SearchIcon from "@material-ui/icons/Search";
 
@@ -65,9 +66,17 @@ const AllCountriesCard = () => {
 		setCountries(searchResult);
 	};
 
+	const handleReset = () => {
+		setSearchValue("");
+		setCountries(finalCountries);
+	};
+
 	return (
 		<>
 			<div className="search-container">
+				<IconButton type="button" onClick={handleReset}>
+					<RestoreOutlined />
+				</IconButton>
 				<Paper
 					onSubmit={handleSearch}
 					component="form"
@@ -94,9 +103,28 @@ const AllCountriesCard = () => {
 				</Paper>
 			</div>
 			<div className="allCountiesContainer">
-				{countries.map((country) => {
-					return <CountryCard key={country} country={country} />;
-				})}
+				{countries && countries.length > 0 ? (
+					countries.map((country) => {
+						return <CountryCard key={country} country={country} />;
+					})
+				) : (
+					<Alert
+						style={{ width: "70vw", margin: "auto" }}
+						severity="error"
+						action={
+							<Button
+								onClick={handleReset}
+								color="inherit"
+								size="small"
+							>
+								UNDO
+							</Button>
+						}
+					>
+						{" "}
+						No Results found ...!
+					</Alert>
+				)}
 			</div>
 		</>
 	);

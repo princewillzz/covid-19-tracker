@@ -8,6 +8,11 @@ const CountryCard = ({ country }) => {
 	const [recovered, setRecovered] = useState(0);
 	const [deaths, setDeaths] = useState(0);
 
+	const [state, setState] = useState({
+		raised: false,
+		shadow: 1,
+	});
+
 	useEffect(() => {
 		console.log("Data");
 		const getCountriesData = async () => {
@@ -27,12 +32,14 @@ const CountryCard = ({ country }) => {
 		};
 
 		getCountriesData();
-	}, []);
 
-	const [state, setState] = useState({
-		raised: false,
-		shadow: 1,
-	});
+		return () => {
+			setConfirmed(null);
+			setRecovered(null);
+			setDeaths(null);
+			setState({});
+		};
+	}, [country]);
 
 	return (
 		<>

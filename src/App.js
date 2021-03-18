@@ -19,18 +19,18 @@ function App() {
 	const handleCountryChange = async (country) => {
 		setCountry(country);
 
-		const data = await fetchData();
+		const data = await fetchData(country);
 		setData(data);
 	};
 
 	return (
 		<>
-			{/* <div className={styles.container}>
+			<div className={styles.container}>
 				<h1>Covid-19 Tracker</h1>
 				<Cards data={data} />
 				<CountryPicker handleCountryChange={handleCountryChange} />
 				<Chart data={data} country={country} />
-			</div> */}
+			</div>
 			<AllCountriesCard />
 		</>
 	);
