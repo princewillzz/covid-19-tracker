@@ -1,0 +1,53 @@
+.search-container {
+	display: grid;
+	grid-template-columns: auto;
+	text-align: center;
+	justify-content: center;
+	margin-top: 3rem;
+}
+
+.allCountiesContainer {
+	margin-top: 2rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	gap: 2px;
+	justify-content: center;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+.country_card {
+	padding: 5px;
+	margin: 5px;
+	width: 350px;
+	height: auto;
+	text-align: center;
+}
+
+.chart-container {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+/* small screen */
+@media only screen and (max-width: 750px) {
+	.allCountiesContainer {
+		grid-template-columns: repeat(auto-fit, minmax(80vw, 1fr));
+	}
+	.country_card {
+		width: 90vw;
+		height: auto;
+	}
+}
+
+/* big screen */
+/* @media only screen and (min-width: 640px) {
+	.allCountiesContainer {
+		grid-template-columns: repeat(auto-fit, auto);
+	}
+	.country_card {
+		width: 500px;
+		height: 300px;
+	}
+} */
