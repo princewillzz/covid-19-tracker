@@ -26,7 +26,7 @@ function App() {
 	return (
 		<>
 			<div className={styles.container}>
-				<h1>Covid-19 Tracker test</h1>
+				<h1>Covid-19 Tracker</h1>
 				<Cards data={data} />
 				<CountryPicker handleCountryChange={handleCountryChange} />
 				<Chart data={data} country={country} />
