@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Grid } from "@material-ui/core";
 import CountUp from "react-countup";
 import cx from "classnames";
@@ -6,9 +6,14 @@ import cx from "classnames";
 import styles from "./Cards.module.css";
 
 const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
-	if (!confirmed) {
-		return "loading..";
-	}
+	const [lastUpdatedAt, setLastUpdatedAt] = useState();
+
+	useEffect(() => {
+		if (lastUpdate) {
+			setLastUpdatedAt(new Date(lastUpdate).toDateString());
+		}
+	}, [lastUpdate]);
+
 	return (
 		<div className={styles.container}>
 			<Grid container spacing={3} justify="center">
@@ -24,18 +29,19 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 							{" "}
 							Infected
 						</Typography>
+
 						<Typography variant="h5" gutterBottom>
 							{" "}
 							<CountUp
 								start={0}
-								end={confirmed.value}
+								end={!confirmed ? 0 : confirmed.value}
 								duration={2.5}
 								separator=","
 							/>
 						</Typography>
 						<Typography color="textSecondary" gutterBottom>
 							{" "}
-							{new Date(lastUpdate).toDateString()}
+							{lastUpdatedAt}
 						</Typography>
 						<Typography variant="body2" gutterBottom>
 							{" "}
@@ -59,14 +65,14 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 							{" "}
 							<CountUp
 								start={0}
-								end={recovered.value}
+								end={!recovered ? 0 : recovered.value}
 								duration={2.5}
 								separator=","
 							/>
 						</Typography>
 						<Typography color="textSecondary" gutterBottom>
 							{" "}
-							{new Date(lastUpdate).toDateString()}
+							{lastUpdatedAt}
 						</Typography>
 						<Typography variant="body2" gutterBottom>
 							{" "}
@@ -90,14 +96,14 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 							{" "}
 							<CountUp
 								start={0}
-								end={deaths.value}
+								end={!deaths ? 0 : deaths.value}
 								duration={2.5}
 								separator=","
 							/>
 						</Typography>
 						<Typography color="textSecondary" gutterBottom>
 							{" "}
-							{new Date(lastUpdate).toDateString()}
+							{lastUpdatedAt}
 						</Typography>
 						<Typography variant="body2" gutterBottom>
 							{" "}

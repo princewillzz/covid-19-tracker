@@ -19,33 +19,18 @@ export const fetchData = async (country) => {
 	} catch (error) {}
 
 	try {
-		//const response = await axios.get(url); Whole response
-		//const { data } = await axios.get(url);
+		// fetch(changeableUrl).then((res) => console.log(res));
+
 		const {
 			data: { confirmed, recovered, deaths, lastUpdate },
 		} = await axios.get(changeableUrl);
-		// console.log("API call");
+
 		fakeDataStore.set(country, {
 			confirmed,
 			recovered,
 			deaths,
 			lastUpdate,
 		});
-
-		/*const modifiedData = {
-      confirmed: confirmed, //data.confirmed,
-      recovered: recovered, //data.recovered,
-      deaths: deaths, //data.deaths,
-      lastUpdate: lastUpdate, //data.lastUpdate,
-    };
-    As the value and the key have the same name so we can just skip the
-     above way and use below
-    const modifiedData = {
-      confirmed,
-      recovered,
-      deaths,
-      lastUpdate,
-    };*/
 
 		return { confirmed, recovered, deaths, lastUpdate };
 
@@ -67,6 +52,14 @@ export const fetchDailyData = async () => {
 };
 
 export const fetchCountries = async () => {
+	// return fetch(`${url}/countries`)
+	// 	.then((res) => res.json())
+	// 	.then((data) => {
+	// 		const { countries } = data;
+	// 		console.log(countries);
+	// 		return countries.map((country) => country.name);
+	// 	});
+
 	try {
 		const {
 			data: { countries },
